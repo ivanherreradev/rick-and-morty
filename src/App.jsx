@@ -7,8 +7,9 @@ function App () {
   const [gender, setGender] = useState('')
   const [status, setStatus] = useState('')
   const [species, setSpecies] = useState('')
+  const [search, setSearch] = useState('')
 
-  const API = `https://rickandmortyapi.com/api/character/?page=${page}&gender=${gender}&status=${status}&species=${species}`
+  const API = `https://rickandmortyapi.com/api/character/?page=${page}&gender=${gender}&status=${status}&species=${species}&name=${search}`
 
   // options for select
   const genders = ['female', 'male', 'genderless', 'unknown']
@@ -53,19 +54,43 @@ function App () {
 
   const handleFilterGender = (value) => {
     setGender(value)
+    setPage(1)
   }
 
   const handleFilterStatus = (value) => {
     setStatus(value)
+    setPage(1)
   }
 
   const handleFilterSpecies = (value) => {
     setSpecies(value)
+    setPage(1)
+  }
+
+  const handleSubmit = (e) => {
+    // Avoid page reloading
+    e.preventDefault()
+    // Get the input value
+    const inputValue = e.target.querySelector('input').value
+    // Update states
+    setSearch(inputValue)
+    setPage(1)
+    // Clean input value
+    e.target.querySelector('input').value = ''
   }
 
   return (
     <div>
       <h1>Rick & Morty Wiki</h1>
+
+      {/* Search */}
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <input
+          placeholder="Search for characters"
+          type="text"
+        />
+        <button type="submit">Search</button>
+      </form>
 
       {/* Pagination */}
       <button onClick={handlePrevPage}>Prev</button>
