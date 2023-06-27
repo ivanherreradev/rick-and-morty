@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import Search from './components/Search'
 
 function App () {
   const [characters, setCharacters] = useState([])
@@ -67,34 +68,18 @@ function App () {
     setPage(1)
   }
 
-  const handleSubmit = (e) => {
-    // Avoid page reloading
-    e.preventDefault()
-    // Get the input value
-    const inputValue = e.target.querySelector('input').value
-    // Update states
-    setSearch(inputValue)
+  const handleSearch = (value) => {
+    setSearch(value)
     setPage(1)
-    // Clean input value
-    e.target.querySelector('input').value = ''
   }
 
   return (
-    <div>
-      <h1>Rick & Morty Wiki</h1>
+    <div className="m-4 flex flex-col">
+      <h1 className="text-white font-bold text-3xl text-center my-2">
+        Rick & Morty Wiki
+      </h1>
 
-      {/* Search */}
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input
-          placeholder="Search for characters"
-          type="text"
-        />
-        <button type="submit">Search</button>
-      </form>
-
-      {/* Pagination */}
-      <button onClick={handlePrevPage}>Prev</button>
-      <button onClick={handleNextPage}>Next</button>
+      <Search handleSearch={handleSearch} />
 
       {/* Filters */}
       {/* Gender */}
@@ -141,6 +126,10 @@ function App () {
           )
         })}
       </ul>
+
+      {/* Pagination */}
+      <button onClick={handlePrevPage}>Prev</button>
+      <button onClick={handleNextPage}>Next</button>
     </div>
   )
 }
