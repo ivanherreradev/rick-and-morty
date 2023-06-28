@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import GenderFilter from './components/GenderFilter'
+import Pagination from './components/Pagination'
 import Search from './components/Search'
 import SpeciesFilter from './components/SpeciesFilter'
 import StatusFilter from './components/StatusFilter'
@@ -75,7 +76,7 @@ function App () {
       </div>
 
       {/* Characters */}
-      <ul>
+      <ul className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-3">
         {characters.map((character) => {
           return (
             <li key={character.id}>
@@ -85,9 +86,12 @@ function App () {
         })}
       </ul>
 
-      {/* Pagination */}
-      <button onClick={handlePrevPage}>Prev</button>
-      <button onClick={handleNextPage}>Next</button>
+      <Pagination
+        page={page}
+        totalPages={data.pages}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
     </div>
   )
 }
