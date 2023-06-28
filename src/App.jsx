@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
+import GenderFilter from './components/GenderFilter'
 import Search from './components/Search'
+import SpeciesFilter from './components/SpeciesFilter'
+import StatusFilter from './components/StatusFilter'
 
 function App () {
   const [characters, setCharacters] = useState([])
@@ -11,23 +14,6 @@ function App () {
   const [search, setSearch] = useState('')
 
   const API = `https://rickandmortyapi.com/api/character/?page=${page}&gender=${gender}&status=${status}&species=${species}&name=${search}`
-
-  // options for select
-  const genders = ['female', 'male', 'genderless', 'unknown']
-  const characterStatus = ['alive', 'dead', 'unknown']
-  const characterSpecies = [
-    'human',
-    'alien',
-    'humanoid',
-    'poopybutthole',
-    'mythological',
-    'unknown',
-    'animal',
-    'disease',
-    'robot',
-    'cronenberg',
-    'planet'
-  ]
 
   useEffect(() => {
     fetch(API)
@@ -74,7 +60,7 @@ function App () {
   }
 
   return (
-    <div className="m-4 flex flex-col">
+    <div className="mx-auto my-4 flex flex-col items-center max-w-[1200px]">
       <h1 className="text-white font-bold text-3xl text-center my-2">
         Rick & Morty Wiki
       </h1>
@@ -82,39 +68,11 @@ function App () {
       <Search handleSearch={handleSearch} />
 
       {/* Filters */}
-      {/* Gender */}
-      <select onChange={(e) => handleFilterGender(e.target.value)}>
-        <option value={''}>All Genders</option>
-        {genders.map((gender) => {
-          return (
-            <option key={gender} value={gender}>
-              {gender}
-            </option>
-          )
-        })}
-      </select>
-      {/* Status */}
-      <select onChange={(e) => handleFilterStatus(e.target.value)}>
-        <option value={''}>All Status</option>
-        {characterStatus.map((status) => {
-          return (
-            <option key={status} value={status}>
-              {status}
-            </option>
-          )
-        })}
-      </select>
-      {/* Species */}
-      <select onChange={(e) => handleFilterSpecies(e.target.value)}>
-        <option value={''}>All Species</option>
-        {characterSpecies.map((species) => {
-          return (
-            <option key={species} value={species}>
-              {species}
-            </option>
-          )
-        })}
-      </select>
+      <div className="flex flex-col gap-4 my-4 md:flex md:flex-row">
+        <GenderFilter handleFilterGender={handleFilterGender} />
+        <StatusFilter handleFilterStatus={handleFilterStatus} />
+        <SpeciesFilter handleFilterSpecies={handleFilterSpecies} />
+      </div>
 
       {/* Characters */}
       <ul>
